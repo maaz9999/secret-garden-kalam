@@ -35,12 +35,11 @@ export default function Hero() {
           sizes="100vw"
           className="object-cover object-center"
         />
-        {/* Gradients for ambient mood and readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-pine-950 via-pine-950/50 to-black/40" />
-        <div className="absolute inset-0 bg-radial-vignette opacity-70" />
+        {/* Soft Vignette & Subtle Gradient for Text Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-t from-pine-950/95 via-pine-950/45 to-black/50" />
       </motion.div>
 
-      {/* Lightweight Procedural Three.js Canvas Layer */}
+      {/* Atmospheric Soft Fog Layer */}
       <ForestAtmosphere />
 
       {/* Hero Foreground Content */}
@@ -53,7 +52,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pine-900/80 border border-amber/30 backdrop-blur-md mb-6"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pine-950/80 border border-amber/40 backdrop-blur-md mb-6 shadow-lg"
         >
           <span className="w-2 h-2 rounded-full bg-amber animate-pulse" />
           <span className="font-sans text-xs uppercase tracking-[0.25em] text-amber font-semibold">
@@ -66,10 +65,12 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-cream font-light tracking-wide leading-[1.08] max-w-4xl"
+          className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-light tracking-wide leading-[1.08] max-w-4xl drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]"
         >
           Where the Mountains <br />
-          <span className="italic font-normal text-amber-light">Let Time Slow Down</span>
+          <span className="italic font-normal text-amber-light text-shadow-lg">
+            Let Time Slow Down
+          </span>
         </motion.h1>
 
         {/* Supporting Copy */}
@@ -77,7 +78,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="font-sans text-sm md:text-lg text-cream/80 font-light max-w-2xl mt-6 leading-relaxed"
+          className="font-sans text-sm sm:text-base md:text-lg text-cream/90 font-light max-w-2xl mt-6 leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]"
         >
           Warm cottages, quiet gardens and unhurried moments surrounded by the wild beauty of Kalam.
         </motion.p>
@@ -99,7 +100,7 @@ export default function Hero() {
 
           <Link
             href="/experience"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-pine-900/60 hover:bg-pine-800 border border-amber/30 text-cream font-sans text-xs tracking-[0.2em] uppercase font-medium backdrop-blur-md transition-all duration-300"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-pine-950/70 hover:bg-pine-900 border border-amber/40 text-white font-sans text-xs tracking-[0.2em] uppercase font-medium backdrop-blur-md transition-all duration-300 shadow-lg"
           >
             <span>Explore Kalam</span>
           </Link>
@@ -111,7 +112,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 1 }}
-        className="absolute bottom-8 z-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-amber/70 hover:text-amber transition-colors"
+        className="absolute bottom-8 z-20 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-amber/80 hover:text-amber transition-colors drop-shadow-md"
       >
         <span className="font-sans text-[10px] uppercase tracking-[0.3em] font-light">
           Scroll to Discover

@@ -40,48 +40,19 @@ export default function ForestAtmosphere() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     renderer.setSize(container.clientWidth, container.clientHeight);
 
-    // 2. Pine Tree Silhouettes Group (Subtle Depth Layers)
-    const pineGroup = new THREE.Group();
-
-    const pinesData = [
-      { x: -7, y: -2, z: -6, radius: 1.5, height: 7, color: 0x070d0b, opacity: 0.45 },
-      { x: 8, y: -1.5, z: -7, radius: 1.8, height: 8, color: 0x060c0a, opacity: 0.5 },
-      { x: -9, y: -3, z: -3, radius: 2.2, height: 9, color: 0x0b1310, opacity: 0.35 },
-      { x: 9.5, y: -3.5, z: -4, radius: 2.4, height: 9.5, color: 0x09100d, opacity: 0.35 },
-    ];
-
-    const pineGeometries: THREE.BufferGeometry[] = [];
-    const pineMaterials: THREE.Material[] = [];
-
-    pinesData.forEach((p) => {
-      const geom = new THREE.ConeGeometry(p.radius, p.height, 5);
-      const mat = new THREE.MeshBasicMaterial({
-        color: p.color,
-        transparent: true,
-        opacity: p.opacity,
-      });
-      const mesh = new THREE.Mesh(geom, mat);
-      mesh.position.set(p.x, p.y, p.z);
-      pineGroup.add(mesh);
-      pineGeometries.push(geom);
-      pineMaterials.push(mat);
-    });
-
-    scene.add(pineGroup);
-
-    // 3. Drifting Fog Layer (Subtle Mountain Fog)
-    const fogGeom = new THREE.PlaneGeometry(22, 10);
+    // 2. Drifting Mountain Fog Layer (Subtle & Soft)
+    const fogGeom = new THREE.PlaneGeometry(24, 12);
     const fogMat = new THREE.MeshBasicMaterial({
       color: 0x111e18,
       transparent: true,
-      opacity: 0.12,
+      opacity: 0.08,
       depthWrite: false,
     });
     const fogMesh = new THREE.Mesh(fogGeom, fogMat);
     fogMesh.position.set(0, -1, -2);
     scene.add(fogMesh);
 
-    // 4. Pointer Depth Parallax Listener
+    // 3. Pointer Depth Parallax Listener
     let mouseX = 0;
     let mouseY = 0;
     const handleMouseMove = (e: MouseEvent) => {
@@ -90,7 +61,7 @@ export default function ForestAtmosphere() {
     };
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
-    // 5. Animation Loop & Visibility Control
+    // 4. Animation Loop & Visibility Control
     let animationFrameId: number;
     let isVisible = true;
     const clock = new THREE.Clock();
@@ -111,19 +82,16 @@ export default function ForestAtmosphere() {
 
       const elapsedTime = clock.getElapsedTime();
 
-      // Smooth pointer parallax movement for pine group
-      pineGroup.position.x += (mouseX - pineGroup.position.x) * 0.03;
-      pineGroup.position.y += (-mouseY - pineGroup.position.y) * 0.03;
-
-      // Drifting fog horizontal motion
-      fogMesh.position.x = Math.sin(elapsedTime * 0.15) * 0.8;
+      // Drifting fog horizontal motion & camera parallax
+      fogMesh.position.x = Math.sin(elapsedTime * 0.12) * 0.6 + mouseX * 0.2;
+      fogMesh.position.y = -1 + mouseY * 0.1;
 
       renderer.render(scene, camera);
     };
 
     animate();
 
-    // 6. Window Resize Listener
+    // 5. Window Resize Listener
     const handleResize = () => {
       if (!container) return;
       const width = container.clientWidth;
@@ -135,15 +103,13 @@ export default function ForestAtmosphere() {
     };
     window.addEventListener('resize', handleResize);
 
-    // 7. Cleanup GPU Resources
+    // 6. Cleanup GPU Resources
     return () => {
       cancelAnimationFrame(animationFrameId);
       observer.disconnect();
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
 
-      pineGeometries.forEach((g) => g.dispose());
-      pineMaterials.forEach((m) => m.dispose());
       fogGeom.dispose();
       fogMat.dispose();
       renderer.dispose();
